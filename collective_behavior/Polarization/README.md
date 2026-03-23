@@ -40,7 +40,7 @@ Outputs:
 
 - `weights_simplex.pdf`  
   Ternary plot of weight evolution for selected agents
-  [weights_simplex.pdf](https://github.com/user-attachments/files/26174671/weights_simplex.pdf)
+  [![Trajectories](<img width="2280" height="2280" alt="trajectories" src="https://github.com/user-attachments/assets/5c5c6b62-6db1-448d-bd64-e624ab1d5b2d" />)](https://github.com/user-attachments/files/26174671/weights_simplex.pdf)
 
 - `trajectories.pdf`  
   Plot of the trajectories of all agents
