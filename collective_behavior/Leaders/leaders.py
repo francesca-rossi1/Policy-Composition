@@ -10,7 +10,6 @@ class Boid:
         self.position = np.array(position, dtype=float)
         self.velocity = np.array(velocity, dtype=float)
         self.weights = np.array(weights, dtype=float)
-        #self.acceleration = np.array([0, 0], dtype=float)
         self.trajectory = [self.position.copy()]  # Track position history
 
     def get_neighbors(self, boids, perception_radius, fov_degrees=320):
@@ -245,25 +244,7 @@ def update_weights(boid, neighbors, pi_u, dt, N_primitives, u_grid, speed_limit,
     w_new = integrate_weights(w, pi_u_flat, c_tilde, eps, t_span, deltat)
     boid.weights = w_new
 
-    # Compute objective for the converged weights
-    # policy over u-grid induced by the mixture-of-primitives
-    policy_u = np.clip(w_new @ pi_u_flat, 1e-12, None)  # shape (M,)
-    policy_u /= np.sum(policy_u)
-
-    # 1) plant part: expectation over p(u) of KL(p(x|u)||q(x|u))
-    kl_plant_term = float(np.dot(policy_u, kl_divs))
-
-    # 2) policy part: discrete KL between policy_u and q_u (q_u was uniform earlier)
-    # note log_q_u computed earlier as np.log(q_u)
-    kl_policy_term = float(np.sum(policy_u * (np.log(policy_u) - log_q_u)))
-
-    # 3) entropy of weights (the regularizer in your objective)
-    entropy_w = -float(np.sum(w_new * np.log(np.clip(w_new, 1e-12, None))))
-
-    # Full joint KL minus entropy regularization
-    obj_val = kl_plant_term + kl_policy_term - eps * entropy_w
-
-    return w_new, obj_val
+    return w_new
 
 
 def run_step(frame_num):
@@ -272,8 +253,6 @@ def run_step(frame_num):
 
     step_counter['frame'] = frame_num
 
-    boid_objectives = []
-
     for i, boid in enumerate(flock):
         neighbors = boid.get_neighbors(flock, PERCEPTION_RADIUS)
         primitives = compute_primitives(boid, neighbors, radii, primitives_var, N_primitives, u_grid, u_max_norm)
@@ -281,19 +260,14 @@ def run_step(frame_num):
             informed = 1
         else:
             informed = 0
-        wk, obj_k = update_weights(boid, neighbors, primitives, dt, N_primitives, u_grid, speed_limit, radii, informed, eps)
+        wk = update_weights(boid, neighbors, primitives, dt, N_primitives, u_grid, speed_limit, radii, informed, eps)
         steering = compute_steering(primitives, wk, u_grid, u_max_norm)
         update_boid(boid, wk, steering, dt, speed_limit)
-
-        boid_objectives.append(obj_k)
 
         '''if boid_out_of_bounds(boid):
             step_counter['stop'] = True
             print(f"Simulation stopped at frame {frame_num} due to boundary exit.")
             return []'''
-
-
-    objective_history.append(boid_objectives)
 
     # Compute and store polarization and milling
     P = compute_polarization(flock)
@@ -303,9 +277,7 @@ def run_step(frame_num):
 
     frame_weights = [boid.weights for boid in flock]
     weights_history.append(frame_weights)
-
     velocities_history.append([np.linalg.norm(boid.velocity) for boid in flock])
-    #accelerations_history.append([np.linalg.norm(boid.acceleration) for boid in flock])
 
     # Compute and store mean flock position and its distance from the goal
     mean_pos = np.mean([b.position for b in flock], axis=0)
@@ -398,10 +370,7 @@ distance_history = []   # distance form the goal
 milling_history = []
 weights_history = []
 velocities_history = []
-#accelerations_history = []
 
-# Store objective values
-objective_history = []
 
 # Run simulation
 for frame in tqdm(range(max_steps), desc="Running simulation"):
@@ -416,8 +385,6 @@ np.save(f"weights_history.npy", weights_history)
 np.save(f"polarization_history.npy", polarization_history)
 np.save(f"milling_history.npy", milling_history)
 np.save(f"distance_history.npy", distance_history)
-
-np.save(f"objective_history.npy", objective_history)
 
 
 # Save trajectories for all boids
