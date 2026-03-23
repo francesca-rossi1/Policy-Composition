@@ -1,6 +1,6 @@
 # Leaders
 
-This folder contains the code to replicate the leader–follower experiment, where a subset of agents is informed and steers the flock toward a target.
+This folder contains the code to replicate the leader–follower experiment from the main text of the paper, where a subset of agents (10%) is informed and steers the flock toward a target.
 
 ## Contents
 
