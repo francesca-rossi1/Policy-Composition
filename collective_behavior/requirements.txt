@@ -1,0 +1,6 @@
+matplotlib==3.10.8
+numpy==2.4.3
+python-ternary==1.0.8
+scipy==1.17.1
+ternary==0.1
+tqdm==4.66.5
