@@ -7,4 +7,4 @@ The folder includes multiple simulation scenarios:
 
 - `Polarization/` – Code and video for the polarization experiment
 - `Milling/` – Code and video for the milling experiment
-- `Leaders/` – Code and video for the experiment with informed agents moving toward a goal destination
+- `Leaders/` – Code and video for the experiment with some agents informed about a goal destination
