@@ -77,6 +77,8 @@ Outputs:
   
   https://github.com/user-attachments/assets/e5ac6d77-86cd-4c8a-a755-2c8ce5754b5a
 
+  *Note: playback speed is 2× the simulated dynamics (fps = 2/dt).*
+
 - `all_boids_weights_simplex.pdf`  
   Grid of ternary plots for all agents
 
