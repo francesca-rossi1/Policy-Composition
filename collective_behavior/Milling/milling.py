@@ -264,9 +264,9 @@ def update_weights(boid, neighbors, pi_u, dt, N_primitives, u_grid, speed_limit,
     return w_new
 
 
-# Function to check if any boid is out of bounds
+'''# Function to check if any boid is out of bounds
 def boid_out_of_bounds(boid):
-    return (np.abs(boid.position) > boundary).any()
+    return (np.abs(boid.position) > boundary).any()'''
 
 
 def compute_polarization(boids):
@@ -390,9 +390,8 @@ primitives_var = [0.1, 0.1, 0.1]
 eps = 0.5
 
 max_steps = 440
-stop_step = max_steps  # default
 
-boundary = area_limits[0]  # positive limit assumed symmetric
+#boundary = area_limits[0]  # positive limit assumed symmetric
 
 polarization_history = []
 
