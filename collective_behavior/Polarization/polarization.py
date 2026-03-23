@@ -288,10 +288,10 @@ def run_step(frame_num):
         steering = compute_steering(primitives, wk, u_grid, u_max_norm)
         update_boid(boid, wk, steering, dt, speed_limit)
 
-        if boid_out_of_bounds(boid):
+        '''if boid_out_of_bounds(boid):
             step_counter['stop'] = True
             print(f"Simulation stopped at frame {frame_num} due to boundary exit.")
-            return
+            return'''
 
     # Compute and store polarization
     P = compute_polarization(flock)
