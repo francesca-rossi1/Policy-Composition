@@ -66,6 +66,8 @@ Outputs:
 
   https://github.com/user-attachments/assets/6b42cda6-6936-4343-8493-489e69b14a8e
 
+  *Note: playback speed is 2× the simulated dynamics (fps = 2/dt).*
+
 - `all_boids_weights_simplex.pdf`  
   Grid of ternary plots showing weight evolution for all agents
 
