@@ -40,25 +40,35 @@ Outputs:
 
 - `weights_simplex.pdf`  
   Ternary plot of weight evolution for selected agents
-  [![Trajectories](<img width="2280" height="2280" alt="trajectories" src="https://github.com/user-attachments/assets/5c5c6b62-6db1-448d-bd64-e624ab1d5b2d" />)](https://github.com/user-attachments/files/26174671/weights_simplex.pdf)
+  
+  <a href="https://github.com/user-attachments/files/26174671/weights_simplex.pdf">
+  <img src="https://github.com/user-attachments/assets/ec726983-c82d-45cf-b664-334e77c99c5c" width="600">
+  </a> 
 
 - `trajectories.pdf`  
   Plot of the trajectories of all agents
-  [trajectories.pdf](https://github.com/user-attachments/files/26174682/trajectories.pdf)
+  
+  <a href="https://github.com/user-attachments/files/26174682/trajectories.pdf">
+  <img src="https://github.com/user-attachments/assets/5c5c6b62-6db1-448d-bd64-e624ab1d5b2d" width="600">
+  </a>
 
 - `polarization.pdf`  
   Polarization as a function of time
-  [polarization.pdf](https://github.com/user-attachments/files/26174689/polarization.pdf)
+
+  <a href="https://github.com/user-attachments/files/26174689/polarization.pdf">
+  <img src="https://github.com/user-attachments/assets/7ed286bd-2995-47e4-ab32-ad7262b5dda1" width="600">
+  </a>
 
 - `trajectories_video.mp4`  
   Animation of the flock evolution
   
-
-https://github.com/user-attachments/assets/4193f471-9194-46f4-8554-e757bc72f251
+  https://github.com/user-attachments/assets/4193f471-9194-46f4-8554-e757bc72f251
 
 
 - `all_boids_weights_simplex.pdf`  
   Grid of ternary plots for all agents
-  [all_boids_weights_simplex.pdf](https://github.com/user-attachments/files/26174698/all_boids_weights_simplex.pdf)
 
+  <a href="https://github.com/user-attachments/files/26174698/all_boids_weights_simplex.pdf">
+  <img src="https://github.com/user-attachments/assets/00ef73a1-dad1-4629-8554-5f5b36014785" width="600">
+  </a>
 ---
