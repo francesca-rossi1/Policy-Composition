@@ -83,9 +83,32 @@ After running the experiment, generate the figures with:
 
 The script produces:
 - total episode cost plot
+  
+  <a href="https://github.com/user-attachments/files/26264852/total_episode_cost.pdf">
+  <img src="https://github.com/user-attachments/assets/119a0021-52ab-4103-8de8-a3cce5472ca8" width="600">
+  </a>
+
 - trajectory overlay figure comparing the composed controller and the PID baseline
+
+  <a href="https://github.com/user-attachments/files/26264957/traj_our_pid.pdf">
+  <img src="https://github.com/user-attachments/assets/b7031a52-1acc-4040-aaff-091359f57b53" width="600">
+  </a>
+
 
 The figures are saved in:
 `Results_PD-PD/Figures/`
+
+
+## Acknowledgment
+This code builds on the `Safe-Control-Gym` framework:
+
+Z. Yuan, A. W. Hall, S. Zhou, L. Brunke, M. Greeff, J. Panerati, and A. P. Schoellig,
+
+Safe-Control-Gym: A Unified Benchmark Suite for Safe Learning-Based Control and Reinforcement Learning in Robotics.
+
+IEEE Robotics and Automation Letters, 2022.
+
+Official repository:
+[Safe-Control-Gym](https://github.com/utiasDSL/safe-control-gym)
 
 
