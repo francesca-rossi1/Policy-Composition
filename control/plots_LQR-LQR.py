@@ -9,9 +9,9 @@ from matplotlib.ticker import LogLocator, LogFormatterMathtext
 from scipy.stats import mannwhitneyu
 
 
-DIR_name = "Results_PD-PD"
+DIR_name = "Results_LQR-LQR"
 
-FS = 26
+FS = 24
 
 plt.rcParams.update({
     "font.family": "serif",
@@ -48,6 +48,7 @@ colors_tab = ['tab:blue',
               'tab:purple',
               'tab:gray',
               ]
+
 FIG_DIR = DIR_name + "/Figures"
 os.makedirs(FIG_DIR, exist_ok=True)
 
@@ -68,7 +69,7 @@ def annotate_medians(ax, bp):
             # fmt.format(y),
             ha='left',
             va='center',
-            fontsize=19
+            fontsize=18
         )
 
 
@@ -76,7 +77,7 @@ labels = (
         ['Ours'] +
         [f"Stabilizing\nprimitive"] +
         [f"Tracking\nprimitive"] +
-        ['PID']
+        ['LQR']
 )
 
 method_seed_values = []
@@ -85,31 +86,33 @@ method_seed_values = []
 method_seed_values.append(
     np.array([l['mixture']['episode_cost'] for l in logs_seeds])
 )
+
 # --- Primitives
 for i in range(n_primitives):
     method_seed_values.append(
         np.array([l['primitives'][i]['episode_cost'] for l in logs_seeds])
     )
-# --- PID
+
+# --- LQR
 method_seed_values.append(
-    np.array([l['pid_baseline']['episode_cost'] for l in logs_seeds])
+    np.array([l['lqr']['episode_cost'] for l in logs_seeds])
 )
 
 
 # ============================================================
 # indices
 idx_mixture = 0
-idx_pid = n_primitives + 1
+idx_lqr = n_primitives + 1
 
 mix_vals = method_seed_values[idx_mixture]
-pid_vals = method_seed_values[idx_pid]
+lqr_vals = method_seed_values[idx_lqr]
 
 stat, p_value = mannwhitneyu(
     mix_vals,
-    pid_vals,
-    alternative='two-sided'   # or 'less' if testing mixture < PID
+    lqr_vals,
+    alternative='two-sided'
 )
-print("\n===== Statistical Test: Ours vs Baseline PID =====")
+print("\n===== Statistical Test: Ours vs Baseline LQR =====")
 print(f"U statistic: {stat:.4f}")
 print(f"p-value:     {p_value:.4e}")
 print("Significant (p < 0.05)? ->", p_value < 0.05)
@@ -127,17 +130,17 @@ def cliffs_delta(x, y):
     return (greater - less) / (n_x * n_y)
 
 
-delta = cliffs_delta(mix_vals, pid_vals)
+delta = cliffs_delta(mix_vals, lqr_vals)
 print("Cliff's delta:", delta)
 
-prob = np.mean(mix_vals < pid_vals)
-print("P(Ours < PID):", prob)
+prob = np.mean(mix_vals < lqr_vals)
+print("P(Ours < LQR):", prob)
 
 
 # ============================================================
 # Total episode cost
 # ============================================================
-fig, ax = plt.subplots(figsize=(11, 8))
+fig, ax = plt.subplots(figsize=(11,8))
 
 x = np.arange(len(labels))
 
@@ -176,6 +179,7 @@ for med in bp['medians']:
     med.set_color('black')
     med.set_linewidth(2.2)
 
+
 annotate_medians(ax, bp)
 
 ax.set_xticks(x)
@@ -200,13 +204,13 @@ fig.savefig(
 )
 
 
-# ========= Ours and baseline PID trajectories plot ============
+# ========= Ours and baseline LQR trajectories plot ============
 
 colors_rgb = [mcolors.to_rgb(c) for c in colors_tab]
 
 
 def set_camera(env,
-               distance=1.2,  # smaller = zoom in
+               distance=1.2,   # smaller = zoom in
                yaw=-20,
                pitch=-30,
                target=(0, 0, 0.8)
@@ -273,10 +277,10 @@ def render_overlay_figure(
     # reset env to clean initial state
     # --------------------------------------------------
     env.reset(seed=seed_id)
-    set_camera(env, distance=0.8, yaw=0, pitch=0, target=(0, 0, 1))
+    set_camera(env, distance=1.0, yaw=0, pitch=0, target=(0, 0, 1))
 
     base_img, view, proj, W, H = capture_env_image(env)
-    fig, ax = plt.subplots(figsize=(W / 300, H / 300), dpi=300)
+    fig, ax = plt.subplots(figsize=(W/300, H/300), dpi=300)
     ax.imshow(base_img)
     ax.axis("off")
 
@@ -333,16 +337,16 @@ def render_overlay_figure(
             ax.imshow(overlay, zorder=Z_DRONE)
 
     # --------------------------------------------------
-    # baseline pid trajectory + drones
+    # baseline lqr trajectory + drones
     # --------------------------------------------------
-    X_pid = logs_seeds[seed_id]['pid_baseline']['x']
+    X_lqr = logs_seeds[seed_id]['lqr']['x']
     plot_traj(
-        X_pid,
+        X_lqr,
         colors_rgb[3],
-        zorder=Z_PID,
-        label="PID"
+        zorder=Z_LQR,
+        label="LQR"
     )
-    overlay_drones(X_pid, colors_rgb[3])
+    overlay_drones(X_lqr, colors_rgb[3])
 
     # --------------------------------------------------
     # ours trajectory + drones
@@ -374,7 +378,7 @@ def render_overlay_figure(
 
     path = os.path.join(
         FIG_DIR,
-        "traj_ours_pid.pdf"
+        "traj_ours_lqr.pdf"
     )
 
     fig.savefig(path, bbox_inches='tight')
@@ -403,27 +407,27 @@ def set_drone_state_from_X(env, X):
     )
 
 
-seed_id = min(5, len(logs_seeds) - 1)
+seed_id = min(7, len(logs_seeds) - 1)
 
 config = ConfigFactory().merge([
-    "examples/pid/config_overrides/quadrotor_2D/quadrotor_2D_track.yaml"
+    "examples/lqr/config_overrides/quadrotor_2D/quadrotor_2D_track.yaml"
 ])
 config.task_config.pop("randomized_init", None)
 config.task_config["init_state"] = x0
 
 env_render = make(
-    'quadrotor',
-    randomized_init=False,
-    **config.task_config
-)
+        'quadrotor',
+        randomized_init=False,
+        **config.task_config,
+    )
 
 obs, _ = env_render.reset(seed=seed_id)
 
-Z_REF = 2
-Z_POLICY = 6
-Z_PID = 5
-Z_DRONE = 8
-Z_MARKER = 10
+Z_REF       = 2
+Z_POLICY    = 6
+Z_LQR       = 5
+Z_DRONE     = 8
+Z_MARKER    = 10
 
 render_overlay_figure(
     env_render,
@@ -432,7 +436,7 @@ render_overlay_figure(
     colors_rgb,
     FIG_DIR,
     seed_id=seed_id,
-    drone_stride=23,
+    drone_stride=22,
     drone_alpha=0.8
 )
 
