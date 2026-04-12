@@ -498,7 +498,7 @@ def main():
     u_eq = symbolic.U_EQ
 
     # INITIALIZATION
-    N_seeds = 6  # number of seeds to test
+    N_seeds = 1000  # number of seeds to test
     T = X_REF.shape[0]-1
 
     # INITIALIZATION
