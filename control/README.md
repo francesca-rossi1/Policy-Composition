@@ -163,8 +163,8 @@ python plots_LQR-LQR.py
 The script produces:
 - total episode cost plot
 
-  <a href="https://github.com/user-attachments/files/26662195/total_episode_cost.pdf">
-  <img src="https://github.com/user-attachments/assets/73e37287-dee6-4f73-9902-bfc2159c7275" width="600">
+  <a href="https://github.com/user-attachments/files/26662379/total_episode_cost.pdf">
+  <img src="https://github.com/user-attachments/assets/3a763120-4f3b-4e80-b25b-34a9f067ed0b" width="600">
   </a>
 
 - trajectory overlay figure comparing our policy composition method and the LQR baseline
