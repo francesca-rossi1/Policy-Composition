@@ -140,7 +140,7 @@ The script produces:
   <img src="https://github.com/user-attachments/assets/119a0021-52ab-4103-8de8-a3cce5472ca8" width="600">
   </a>
 
-- trajectory overlay figure comparing our policy composition method and the PID baseline
+- figure comparing the trajectories of the drone controlled by our policy composition method and the PID baseline
 
   <a href="https://github.com/user-attachments/files/26264957/traj_our_pid.pdf">
   <img src="https://github.com/user-attachments/assets/b7031a52-1acc-4040-aaff-091359f57b53" width="600">
@@ -163,14 +163,14 @@ python plots_LQR-LQR.py
 The script produces:
 - total episode cost plot
 
-  <a href="https://github.com/user-attachments/files/26662379/total_episode_cost.pdf">
-  <img src="https://github.com/user-attachments/assets/3a763120-4f3b-4e80-b25b-34a9f067ed0b" width="600">
+  <a href="https://github.com/user-attachments/files/26662419/total_episode_cost.pdf">
+  <img src="https://github.com/user-attachments/assets/178d9624-4d26-4149-aa8a-8c40fa5b03c9" width="600">
   </a>
 
-- trajectory overlay figure comparing our policy composition method and the LQR baseline
+- figure comparing the trajectories of the drone controlled by our policy composition method and the LQR baseline
 
-  <a href="https://github.com/user-attachments/files/26662198/traj_ours_lqr.pdf">
-  <img src="https://github.com/user-attachments/assets/a97af2dd-a0c5-4933-901b-ba14cddbb45c" width="600">
+  <a href="https://github.com/user-attachments/files/26662420/traj_ours_lqr.pdf">
+  <img src="https://github.com/user-attachments/assets/a8956f39-90b7-4d2d-901a-697999a716f4" width="600">
   </a>
 
 The figures are saved in:
