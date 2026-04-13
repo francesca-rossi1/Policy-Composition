@@ -39,10 +39,10 @@ It:
 Outputs:
 
 - `weights_simplex.pdf`  
-  Ternary plot of weight evolution for selected agents
+  Ternary plot of weight evolution for  one representative agent
   
   <a href="https://github.com/user-attachments/files/26174671/weights_simplex.pdf">
-  <img src="https://github.com/user-attachments/assets/ec726983-c82d-45cf-b664-334e77c99c5c" width="600">
+  <img src="https://github.com/user-attachments/assets/ec726983-c82d-45cf-b664-334e77c99c5c" width="400">
   </a> 
 
 - `trajectories.pdf`  
