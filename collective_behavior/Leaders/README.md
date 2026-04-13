@@ -39,7 +39,7 @@ It:
 Outputs:
 
 - `weights_simplex.pdf`  
-  Ternary plot of weight evolution for selected agents (e.g., one informed and one uninformed)
+  Ternary plot of weight evolution for two representative agents (one informed and one uninformed)
   
   <a href="https://github.com/user-attachments/files/26175676/weights_simplex.pdf">
   <img src="https://github.com/user-attachments/assets/9af56e73-841a-4a54-808d-724f5c7f786e" width="400">
