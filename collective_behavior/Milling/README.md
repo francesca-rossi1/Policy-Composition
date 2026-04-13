@@ -48,7 +48,7 @@ Outputs:
   Ternary plot of weight evolution for selected agents
 
   <a href="https://github.com/user-attachments/files/26175355/weights_simplex.pdf">
-  <img src="https://github.com/user-attachments/assets/8151fc1a-3944-4cef-a7cb-42b11c7422d1" width="600">
+  <img src="https://github.com/user-attachments/assets/8151fc1a-3944-4cef-a7cb-42b11c7422d1" width="400">
   </a>
 
 - `trajectories.pdf`  
