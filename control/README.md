@@ -1,5 +1,6 @@
 # Policy Composition for Quadrotor Control
-This folder contains the code used for the control experiments described in the paper and its supplementary material. Two control primitives are composed to perform trajectory tracking for a 2D quadrotor.
+This folder contains the Python code used for the control experiments described in the paper and the SI Appendix.
+Two control primitives are composed to perform a trajectory tracking task for a 2D quadrotor.
 
 The implementation is built on top of [Safe-Control-Gym](https://github.com/utiasDSL/safe-control-gym), using its Crazyflie quadrotor model, controller implementations, and trajectory-tracking environment.
 
