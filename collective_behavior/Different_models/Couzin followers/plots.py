@@ -82,16 +82,6 @@ def plot_weights_simplex(weights_history, agent_indices, dt=0.05, save_path="wei
 
         tax.ticks(axis='lbr', multiple=0.2, offset=0.035, linewidth=1, fontsize=FS, tick_formats="%.1f")
         tax.clear_matplotlib_ticks()
-        tax._redraw_labels()
-
-    '''# --- Single shared colorbar (to the right, not overlapping) ---
-    cbar_ax = fig.add_axes([0.80, 0.25, 0.02, 0.5])  # [left, bottom, width, height]
-    cbar = fig.colorbar(sm, cax=cbar_ax, orientation='vertical')
-
-    tick_locs = np.linspace(0, len(points) - 1, 2)
-    cbar.set_ticks(tick_locs)
-    cbar.set_ticklabels([f"{i * dt:.0f}" for i in tick_locs], fontsize=FS)
-    cbar.set_label("$t$ [s]", fontsize=FS)'''
 
     plt.savefig(save_path, dpi=300, bbox_inches='tight')
     print(f"Figure saved as {save_path}")
