@@ -171,7 +171,7 @@ plt.show()
 
 # -------------------------------
 # Video parameters
-fps = int(2 / dt)   # same speed as before
+fps = int(2 / dt)   # double speed
 max_traj_length = 40
 
 # Load trajectories
