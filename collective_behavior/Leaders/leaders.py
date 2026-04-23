@@ -145,7 +145,6 @@ def update_boid(boid, w, steering, dt, max_speed):
     boid.weights = w
     boid.position += boid.velocity * dt
     boid.trajectory.append(boid.position.copy())
-    #boid.acceleration = steering
     velocity_update = steering * dt
     boid.velocity += velocity_update
 
@@ -177,17 +176,16 @@ def integrate_weights(w0, pi_u_flat, c_tilde, epsilon, t_span, deltat):
 lambda_z_p = 100.0
 lambda_z_v = 100.0
 dim = 4
-cov_p = np.diag([1 / lambda_z_p, 1 / lambda_z_p, 1 / lambda_z_v, 1 / lambda_z_v]) #if informed else np.diag([1 / lambda_z, 1 / lambda_z, 0.1 / lambda_z, 0.1 / lambda_z])
+cov_p = np.diag([1 / lambda_z_p, 1 / lambda_z_p, 1 / lambda_z_v, 1 / lambda_z_v])
 cov_q = cov_p
 inv_cov_q = np.diag([lambda_z_p, lambda_z_p, lambda_z_v, lambda_z_v])
+
 
 def update_weights(boid, neighbors, pi_u, dt, N_primitives, u_grid, speed_limit, radii, informed, eps):
     p_prev = boid.position
     v_prev = boid.velocity
     w = boid.weights.copy()
-
     log_det_cov_ratio = np.log(np.linalg.det(cov_q) / np.linalg.det(cov_p))
-
     # Predict new velocities for each control input u_vec
     v_next = v_prev + u_grid * dt
     # Compute norms without keepdims
@@ -196,13 +194,10 @@ def update_weights(boid, neighbors, pi_u, dt, N_primitives, u_grid, speed_limit,
     too_fast = norms > speed_limit  # shape (M,)
     # Clip velocities by scaling down to speed_limit where necessary
     v_next[too_fast] = v_next[too_fast] / norms[too_fast, np.newaxis] * speed_limit
-
     # Predict next positions (constant velocity step)
     p_next = p_prev + v_prev * dt  # shape (2,)
-
     # Tile p_next and v_next for batch calculation
     x_next = np.hstack([np.tile(p_next, (len(v_next), 1)), v_next])  # shape (M, 4)
-
     center_sum = np.zeros(2)
     center_count = 0
     vel_sum = np.zeros(2)
@@ -210,32 +205,24 @@ def update_weights(boid, neighbors, pi_u, dt, N_primitives, u_grid, speed_limit,
     boid_pos = boid.position
     for other in neighbors:
         dist = np.linalg.norm(other.position - boid_pos)
-
         if radii['ali'] < dist < radii['coh']:
             center_sum += other.position
             center_count += 1
-
         if radii['sep'] < dist < radii['ali']:
             vel_sum += other.velocity
             vel_count += 1
-
     mean_pos = center_sum / center_count if center_count > 0 else boid_pos
     mean_vel = vel_sum / vel_count if vel_count > 0 else boid.velocity
-
     mean_target = goal_point if informed else mean_pos
     direction_to_goal = goal_point - boid.position
     target_vel = direction_to_goal / (np.linalg.norm(direction_to_goal) + 1e-8) if informed else mean_vel # normalized vector
-
     target = np.hstack([np.tile(mean_target, (len(v_next), 1)), np.tile(target_vel, (len(v_next), 1))])
     delta_mu = target - x_next
-
     mahalanobis = np.sum(delta_mu @ inv_cov_q * delta_mu, axis=1)
     kl_divs = 0.5 * (-dim + np.trace(inv_cov_q @ cov_p) + mahalanobis + log_det_cov_ratio)  # shape (M,)
-
     # Uniform distribution over available controls
     q_u = np.ones(len(u_grid)) / len(u_grid)
     log_q_u = np.log(q_u)
-
     # Compute softmax update
     c_tilde = kl_divs - log_q_u
     pi_u_flat = pi_u.reshape(N_primitives, -1)  # Shape: (3, n_u_bins^2)
@@ -272,7 +259,7 @@ def run_step(frame_num):
     # Compute and store polarization and milling
     P = compute_polarization(flock)
     polarization_history.append(P)
-    milling = compute_milling_metric(flock[informed_boids:])
+    milling = compute_milling_metric(flock)
     milling_history.append(milling)
 
     frame_weights = [boid.weights for boid in flock]
@@ -302,14 +289,11 @@ def compute_milling_metric(flock):
     positions = np.array([b.position for b in flock])
     velocities = np.array([b.velocity for b in flock])
     cm = positions.mean(axis=0)
-
     rel_positions = positions - cm
     normed_rel_pos = rel_positions / (np.linalg.norm(rel_positions, axis=1, keepdims=True) + 1e-8)
     normed_vel = velocities / (np.linalg.norm(velocities, axis=1, keepdims=True) + 1e-8)
-
     # 2D cross product: r_i x v_i = x_i * v_y - y_i * v_x
     cross_products = normed_rel_pos[:, 0] * normed_vel[:, 1] - normed_rel_pos[:, 1] * normed_vel[:, 0]
-
     milling_metric = np.abs(np.mean(cross_products))
     return milling_metric
 
@@ -317,9 +301,11 @@ def compute_milling_metric(flock):
 # Simulation parameters
 N_primitives = 3
 num_boids = 40
+print("Total number of agents: ", num_boids)
 informed_boids = 4
-speed_limit = 1.0
 print("Number of informed agents: ", informed_boids)
+speed_limit = 1.0
+# Initial conditions
 np.random.seed(5)
 positions = (np.random.rand(num_boids, 2)-0.5) * 5
 # Generate random velocities
@@ -330,18 +316,14 @@ norms = np.linalg.norm(velocities, axis=1)
 too_fast = norms > speed_limit
 # Scale only the ones that are too fast
 velocities[too_fast] = velocities[too_fast] / norms[too_fast][:, np.newaxis] * speed_limit
-
 # Uniform weights
 weights = np.ones((num_boids, N_primitives))/N_primitives
-
 flock = [Boid(pos, vel, w) for pos, vel, w in zip(positions, velocities, weights)]
 radii = {'sep': 1, 'ali': 3, 'coh': 12.0}
-
 dt = 0.05
 area_limits = np.array([25, 25])
-
+boundary = area_limits[0]  # limit assumed symmetric
 PERCEPTION_RADIUS = radii['coh']
-
 n_u_bins = 30
 u_max_norm = 3
 u_vals = np.linspace(-u_max_norm, u_max_norm, n_u_bins)
@@ -352,17 +334,11 @@ u_grid = np.array([
     for uy in u_axis[1]
     if np.linalg.norm([ux, uy]) <= u_max_norm
 ])
-
 primitives_var = [0.1, 0.1, 0.1]
 # Entropy-regularization gain
 eps = 0.5
-
 max_steps = 1220
-
-boundary = area_limits[0]  # positive limit assumed symmetric
-
 goal_point = np.array([-15, -15])
-
 step_counter = {'frame': 0, 'stop': False}  # Mutable object to track stopping
 
 polarization_history = []
@@ -385,7 +361,6 @@ np.save(f"weights_history.npy", weights_history)
 np.save(f"polarization_history.npy", polarization_history)
 np.save(f"milling_history.npy", milling_history)
 np.save(f"distance_history.npy", distance_history)
-
 
 # Save trajectories for all boids
 all_trajectories = [boid.trajectory for boid in flock]

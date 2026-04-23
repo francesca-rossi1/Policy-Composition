@@ -7,6 +7,7 @@ from matplotlib.collections import LineCollection
 from matplotlib.animation import FFMpegWriter
 from tqdm import tqdm
 from matplotlib import gridspec
+import matplotlib.ticker as ticker
 
 
 FS = 20
@@ -136,16 +137,21 @@ ax.set_ylim([-26,10])
 plt.tight_layout()
 plt.savefig("trajectories.pdf", dpi=300, bbox_inches='tight')
 
+
 # -------------------------------
-# Polarization plot
+# Plot metrics
+fig, axs = plt.subplots(2, 1, figsize=(9, 10), sharex=True)
 # Time array
 time = np.arange(len(polarization_history[:max_steps])) * dt
-fig, axs = plt.subplots(2, 1, figsize=(8, 9), sharex=True)
 # --- Polarization plot ---
 axs[0].plot(time, polarization_history[:max_steps], linewidth=2)
 axs[0].set_ylabel(f"$p(t)$", fontsize=FS+4)
 axs[0].set_ylim(0, 1.05)
-# --- Distance plot ---
+# set tick positions every 0.2
+axs[0].set_yticks(np.arange(0, 1.01, 0.25))
+# format tick labels to 1 decimal place
+axs[0].yaxis.set_major_formatter(ticker.FormatStrFormatter('%.2f'))
+# --- Distance to goal plot ---
 axs[1].plot(time, distance_history[:max_steps], linewidth=2)
 axs[1].set_ylabel("$d(t)$", fontsize=FS+4)
 axs[1].set_xlabel(f"$t$ [s]", fontsize=FS+4)
@@ -170,7 +176,6 @@ with open("boids_trajectories.pkl", "rb") as f:
     all_trajectories = pickle.load(f)
 
 num_boids = len(all_trajectories)
-#max_steps = max(len(traj) for traj in all_trajectories)
 
 # Figure setup
 fig, ax = plt.subplots(figsize=(8, 8))
@@ -237,7 +242,6 @@ print(f"Video saved as '{video_name}'")
 
 # -------------------------------
 # ALL-BOIDS SIMPLEX GRID PLOT
-
 cols = 5
 rows = int(np.ceil(num_boids / cols))
 
@@ -250,7 +254,6 @@ fig = plt.figure(figsize=(a4_width_in, fig_height_in))
 fig.patch.set_facecolor('white')
 
 spec = gridspec.GridSpec(rows, cols, wspace=0.5, hspace=0.0)
-
 norm = mpl.colors.Normalize(vmin=0, vmax=len(weights_history[:max_steps]) - 1)
 
 
