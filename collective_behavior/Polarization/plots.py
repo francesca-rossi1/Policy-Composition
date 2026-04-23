@@ -143,7 +143,7 @@ plt.show()
 
 # -------------------------------
 # Video parameters
-fps = int(2 / dt)   # same speed as before
+fps = int(2 / dt)   # double speed
 max_traj_length = 40
 
 # Load trajectories
@@ -151,7 +151,6 @@ with open("boids_trajectories.pkl", "rb") as f:
     all_trajectories = pickle.load(f)
 
 num_boids = len(all_trajectories)
-#max_steps = max(len(traj) for traj in all_trajectories)
 
 # Figure setup
 fig, ax = plt.subplots(figsize=(8, 8))
@@ -169,7 +168,7 @@ for _ in range(num_boids):
     trajectory_collections.append(line)
 
 # Boid scatter
-colors = ["blue"] * num_boids  # adjust if needed
+colors = ["blue"] * num_boids
 scat = ax.scatter(
     [all_trajectories[i][0][0] for i in range(num_boids)],
     [all_trajectories[i][0][1] for i in range(num_boids)],
@@ -214,7 +213,6 @@ print(f"Video saved as '{video_name}'")
 
 # -------------------------------
 # ALL-BOIDS SIMPLEX GRID PLOT
-
 num_boids = len(weights_history[0])
 cols = 5
 rows = int(np.ceil(num_boids / cols))
