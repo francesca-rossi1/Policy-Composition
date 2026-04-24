@@ -9,9 +9,9 @@ This repository contains code for the paper:
 The repository is organized into three folders corresponding to the experiments in the paper:
 
 ```
-├── collective_behavior/  # Collective Behaviors
+├── collective_behavior/  # Emerging Flocking Behaviors
 ├── explore_exploit/      # Exploration/Exploitation in Human Decision-Making
-└── control/              # Control
+└── control/              # Layered Control
 ```
 
 Each experiment is self-contained and includes its own setup instructions.
