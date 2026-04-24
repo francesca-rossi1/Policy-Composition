@@ -1,4 +1,4 @@
-# Collective Behaviors
+# Policy Composition for Emerging Flocking Behaviors
 
 This folder contains the Python implementation of the collective behavior simulations presented in the paper and in the SI Appendix.
 
