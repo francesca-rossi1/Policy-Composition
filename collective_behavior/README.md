@@ -8,7 +8,9 @@ The folder includes multiple simulation scenarios:
 - `Polarization/` – Code for the polarization experiment
 - `Milling/` – Code for the milling experiment
 - `Leaders/` – Code for the experiment with some agents informed about a goal destination
-- `Different_models/` – Code for the experiments with some agents informed about a goal destination implementing our policy composition model, and other uninformed agents implementing three different models from the literature 
+- `Different_models/` – Code for the experiments with some agents informed about a goal destination implementing our policy composition model, and other uninformed agents implementing three different models from the literature
+
+See the 'README.md' inside each folder for details.
 
 
 ## Requirements
