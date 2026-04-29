@@ -305,8 +305,6 @@ def run_all_simulations_for_eps(eps_val):
     np.save(f"distance_eps{eps_val}.npy", distance_array)
     np.save(f"weights_eps{eps_val}.npy", weights_array)
 
-    del polarization_array, milling_array, distance_array, weights_array
-
 
 # Simulation parameters
 N_primitives = 3
