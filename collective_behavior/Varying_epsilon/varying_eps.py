@@ -290,20 +290,18 @@ def run_simulation(speed_limit, eps, seed=None):
 
 # Function to run all simulations for a given eps and return results
 def run_all_simulations_for_eps(speed_limit, eps_val):
-    global eps
-    eps = eps_val
     all_polarization = []
     all_milling = []
     all_distance = []
     all_weights = []
 
     for i in tqdm(range(N_simulations), desc=f"Running simulations for epsilon={eps_val}"):
-        p, m, d, w = run_simulation(speed_limit, eps, seed=i)
+        p, m, d, w = run_simulation(speed_limit, eps_val, seed=i)
         all_polarization.append(p)
         all_milling.append(m)
         all_distance.append(d)
         all_weights.append(w)
-    all_weights_dict[eps] = np.array(all_weights)
+    all_weights_dict[eps_val] = np.array(all_weights)
 
     return (
         np.array(all_polarization),
