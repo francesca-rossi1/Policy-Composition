@@ -129,15 +129,12 @@ def compute_steering(primitives, weights, u_grid, u_max_norm):
     # primitives shape: (N_primitives, M)
     p_u_steering = np.sum(primitives.T * weights, axis=1) + 1e-10  # shape: (M,)
     p_u_steering /= np.sum(p_u_steering)
-
     steering_ind = np.random.choice(len(u_grid), p=p_u_steering)
     steering = u_grid[steering_ind]
-
-    # Norm clipping just in case
+    # Norm clipping
     norm_steering = np.linalg.norm(steering)
     if norm_steering > u_max_norm:
         steering = (steering / norm_steering) * u_max_norm
-
     return steering
 
 
@@ -147,7 +144,6 @@ def update_boid(boid, w, steering, dt, max_speed):
     boid.trajectory.append(boid.position.copy())
     velocity_update = steering * dt
     boid.velocity += velocity_update
-
     # Clip velocity
     norm_v = np.linalg.norm(boid.velocity)
     if norm_v > max_speed:
@@ -188,7 +184,7 @@ def update_weights(boid, neighbors, pi_u, dt, N_primitives, u_grid, speed_limit,
     log_det_cov_ratio = np.log(np.linalg.det(cov_q) / np.linalg.det(cov_p))
     # Predict new velocities for each control input u_vec
     v_next = v_prev + u_grid * dt
-    # Compute norms without keepdims
+    # Compute norms
     norms = np.linalg.norm(v_next, axis=1)  # shape (M,)
     # Boolean mask for speeds exceeding limit
     too_fast = norms > speed_limit  # shape (M,)
@@ -220,7 +216,7 @@ def update_weights(boid, neighbors, pi_u, dt, N_primitives, u_grid, speed_limit,
     delta_mu = target - x_next
     mahalanobis = np.sum(delta_mu @ inv_cov_q * delta_mu, axis=1)
     kl_divs = 0.5 * (-dim + np.trace(inv_cov_q @ cov_p) + mahalanobis + log_det_cov_ratio)  # shape (M,)
-    # Uniform distribution over available controls
+    # Uniform distribution
     q_u = np.ones(len(u_grid)) / len(u_grid)
     log_q_u = np.log(q_u)
     # Compute softmax update

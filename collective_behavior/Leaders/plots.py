@@ -10,7 +10,7 @@ from matplotlib import gridspec
 import matplotlib.ticker as ticker
 
 
-FS = 20
+FS = 18
 plt.rcParams.update({
     "font.family": "serif",
     "font.size": FS,
@@ -135,16 +135,16 @@ fig, axs = plt.subplots(2, 1, figsize=(9, 10), sharex=True)
 time = np.arange(len(polarization_history[:max_steps])) * dt
 # --- Polarization plot ---
 axs[0].plot(time, polarization_history[:max_steps], linewidth=2)
-axs[0].set_ylabel(f"$p(t)$", fontsize=FS+4)
+axs[0].set_ylabel(f"$p$", fontsize=FS+4)
 axs[0].set_ylim(0, 1.05)
 # set tick positions every 0.2
-axs[0].set_yticks(np.arange(0, 1.01, 0.25))
+ax.set_yticks(np.arange(0, 1.01, 0.2))
 # format tick labels to 1 decimal place
-axs[0].yaxis.set_major_formatter(ticker.FormatStrFormatter('%.2f'))
+ax.yaxis.set_major_formatter(ticker.FormatStrFormatter('%.1f'))
 # --- Distance to goal plot ---
 axs[1].plot(time, distance_history[:max_steps], linewidth=2)
-axs[1].set_ylabel("$d(t)$", fontsize=FS+4)
-axs[1].set_xlabel(f"$t$ [s]", fontsize=FS+4)
+axs[1].set_ylabel("$d$", fontsize=FS+4)
+axs[1].set_xlabel(f"Time [s]", fontsize=FS+4)
 # Styling
 for ax in axs:
     ax.set_xlim(0, time[-1])
@@ -198,7 +198,7 @@ scat = ax.scatter(
 
 # Writer
 writer = FFMpegWriter(fps=fps, bitrate=1800)
-video_name = "trajectories_video.mp4"
+video_name = "trajectories_video.mov"
 
 print("\nSaving trajectory video...")
 
