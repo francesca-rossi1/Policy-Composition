@@ -180,7 +180,7 @@ def update_weights(boid, neighbors, pi_u, dt, N_primitives, u_grid, speed_limit,
     v_prev = boid.velocity
     w = boid.weights.copy()
     log_det_cov_ratio = np.log(np.linalg.det(cov_q) / np.linalg.det(cov_p))
-    # Predict new velocities for each control input u_vec
+    # Predict new velocities for each control input
     v_next = v_prev + u_grid * dt
     # Compute norms
     norms = np.linalg.norm(v_next, axis=1)  # shape (M,)
