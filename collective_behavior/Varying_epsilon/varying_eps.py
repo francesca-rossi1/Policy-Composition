@@ -155,6 +155,21 @@ def weight_dynamics(t, w, pi_u_flat, c_tilde, eps):
     return 1/tau * (-w + softmax_result)
 
 
+'''def integrate_weights(w0, pi_u_flat, c_tilde, epsilon, t_span, deltat):
+    t0, t1 = t_span
+    w = w0.copy()
+    t = t0
+    while t < t1:
+        dw = weight_dynamics(t, w, pi_u_flat, c_tilde, epsilon)
+        w_next = w + deltat * dw
+        if np.linalg.norm(w_next - w) < 1e-5:
+            break
+        w = w_next
+        t += deltat
+    if any(w < 0):
+        w = np.clip(w, 1e-12, None)
+        w /= np.sum(w)
+    return w'''
 def integrate_weights(w0, pi_u_flat, c_tilde, epsilon, t_span, deltat):
     sol = solve_ivp(weight_dynamics, t_span, w0, method='RK45', t_eval=np.arange(t_span[0], t_span[1], deltat),
                     args=(pi_u_flat, c_tilde, epsilon), vectorized=False, rtol=1e-6, atol=1e-8)
@@ -171,6 +186,7 @@ dim = 4
 cov_p = np.diag([1 / lambda_z_p, 1 / lambda_z_p, 1 / lambda_z_v, 1 / lambda_z_v])
 cov_q = cov_p
 inv_cov_q = np.diag([lambda_z_p, lambda_z_p, lambda_z_v, lambda_z_v])
+log_det_cov_ratio = np.log(np.linalg.det(cov_q) / np.linalg.det(cov_p))
 t_span = (0, 10)
 deltat = 0.01
 
@@ -179,8 +195,7 @@ def update_weights(boid, neighbors, pi_u, dt, N_primitives, u_grid, speed_limit,
     p_prev = boid.position
     v_prev = boid.velocity
     w = boid.weights.copy()
-    log_det_cov_ratio = np.log(np.linalg.det(cov_q) / np.linalg.det(cov_p))
-    # Predict new velocities for each control input
+    # Predict new velocities for each control input u_vec
     v_next = v_prev + u_grid * dt
     # Compute norms
     norms = np.linalg.norm(v_next, axis=1)  # shape (M,)
@@ -216,9 +231,8 @@ def update_weights(boid, neighbors, pi_u, dt, N_primitives, u_grid, speed_limit,
     kl_divs = 0.5 * (-dim + np.trace(inv_cov_q @ cov_p) + mahalanobis + log_det_cov_ratio)  # shape (M,)
     # Uniform distribution
     q_u = np.ones(len(u_grid)) / len(u_grid)
-    log_q_u = np.log(q_u)
     # Compute softmax update
-    c_tilde = kl_divs - log_q_u
+    c_tilde = kl_divs - np.log(q_u)
     pi_u_flat = pi_u.reshape(N_primitives, -1)  # Shape: (3, n_u_bins^2)
     w_new = integrate_weights(w, pi_u_flat, c_tilde, eps, t_span, deltat)
     boid.weights = w_new
@@ -245,7 +259,7 @@ def compute_milling_metric(flock):
     return milling_metric
 
 
-def initialize_flock(speed_limit, seed=None):
+def initialize_flock(seed=None):
     if seed is not None:
         np.random.seed(seed)
     positions = (np.random.rand(num_boids, 2) - 0.5) * 5
@@ -260,8 +274,8 @@ def initialize_flock(speed_limit, seed=None):
     return [Boid(pos, vel, w) for pos, vel, w in zip(positions, velocities, weights)]
 
 
-def run_simulation(speed_limit, eps, seed=None):
-    flock = initialize_flock(speed_limit, seed)
+def run_simulation(eps, seed=None):
+    flock = initialize_flock(seed)
     polarization, milling, distance = [], [], []
     weight_evolution = []
 
@@ -284,31 +298,29 @@ def run_simulation(speed_limit, eps, seed=None):
         distance.append(np.linalg.norm(mean_pos - goal_point))
         weight_evolution.append(step_weights)
 
-    # shape: [steps, boids, 3]
     return polarization, milling, distance, weight_evolution
 
 
-# Function to run all simulations for a given eps and return results
-def run_all_simulations_for_eps(speed_limit, eps_val):
-    all_polarization = []
-    all_milling = []
-    all_distance = []
-    all_weights = []
+def run_all_simulations_for_eps(eps_val):
+    polarization_array = np.zeros((N_simulations, max_steps), dtype=np.float32)
+    milling_array = np.zeros((N_simulations, max_steps), dtype=np.float32)
+    distance_array = np.zeros((N_simulations, max_steps), dtype=np.float32)
+    weights_array = np.zeros((N_simulations, max_steps, num_boids, N_primitives), dtype=np.float32)
 
-    for i in tqdm(range(N_simulations), desc=f"Running simulations for epsilon={eps_val}"):
-        p, m, d, w = run_simulation(speed_limit, eps_val, seed=i)
-        all_polarization.append(p)
-        all_milling.append(m)
-        all_distance.append(d)
-        all_weights.append(w)
-    all_weights_dict[eps_val] = np.array(all_weights)
+    for i in tqdm(range(N_simulations), desc=f"Running simulations for epsilon = {eps_val}"):
+        p, m, d, w = run_simulation(eps_val, seed=i)
 
-    return (
-        np.array(all_polarization),
-        np.array(all_milling),
-        np.array(all_distance),
-        np.array(all_weights)
-    )
+        polarization_array[i] = np.asarray(p, dtype=np.float32)
+        milling_array[i] = np.asarray(m, dtype=np.float32)
+        distance_array[i] = np.asarray(d, dtype=np.float32)
+        weights_array[i] = np.asarray(w, dtype=np.float32)
+
+    np.save(f"polarization_eps{eps_val}.npy", polarization_array)
+    np.save(f"milling_eps{eps_val}.npy", milling_array)
+    np.save(f"distance_eps{eps_val}.npy", distance_array)
+    np.save(f"weights_eps{eps_val}.npy", weights_array)
+
+    del polarization_array, milling_array, distance_array, weights_array
 
 
 # Simulation parameters
@@ -336,19 +348,8 @@ max_steps = 1500
 goal_point = np.array([-15, -15])
 N_simulations = 30
 eps_values = [0.1, 1, 10]
-all_weights_dict = {}
 
 
 # Run for all eps values
-results = {}
 for e in eps_values:
-    results[e] = run_all_simulations_for_eps(speed_limit, e)
-
-
-# Save results separately for each epsilon
-for eps_val in eps_values:
-    polarization_array, milling_array, distance_array, weights_array = results[eps_val]
-    np.save(f"polarization_eps{eps_val}.npy", polarization_array)
-    np.save(f"milling_eps{eps_val}.npy", milling_array)
-    np.save(f"distance_eps{eps_val}.npy", distance_array)
-    np.save(f"weights_eps{eps_val}.npy", weights_array)
+    run_all_simulations_for_eps(e)
