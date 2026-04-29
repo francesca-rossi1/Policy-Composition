@@ -155,21 +155,6 @@ def weight_dynamics(t, w, pi_u_flat, c_tilde, eps):
     return 1/tau * (-w + softmax_result)
 
 
-'''def integrate_weights(w0, pi_u_flat, c_tilde, epsilon, t_span, deltat):
-    t0, t1 = t_span
-    w = w0.copy()
-    t = t0
-    while t < t1:
-        dw = weight_dynamics(t, w, pi_u_flat, c_tilde, epsilon)
-        w_next = w + deltat * dw
-        if np.linalg.norm(w_next - w) < 1e-5:
-            break
-        w = w_next
-        t += deltat
-    if any(w < 0):
-        w = np.clip(w, 1e-12, None)
-        w /= np.sum(w)
-    return w'''
 def integrate_weights(w0, pi_u_flat, c_tilde, epsilon, t_span, deltat):
     sol = solve_ivp(weight_dynamics, t_span, w0, method='RK45', t_eval=np.arange(t_span[0], t_span[1], deltat),
                     args=(pi_u_flat, c_tilde, epsilon), vectorized=False, rtol=1e-6, atol=1e-8)
