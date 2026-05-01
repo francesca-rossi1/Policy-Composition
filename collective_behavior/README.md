@@ -2,6 +2,7 @@
 
 This folder contains the Python implementation of the collective behavior simulations presented in the paper and in the SI Appendix.
 
+## Overview
 
 The folder includes multiple simulation scenarios:
 
