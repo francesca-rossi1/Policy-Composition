@@ -21,7 +21,7 @@ See the 'README.md' inside each folder for details.
 
 ```
 @article{FR-VC-FB-GR:25,
-  title={{Neural Policy Composition from Free Energy Minimization}},
+  title={Neural Policy Composition from Free Energy Minimization},
   author={F. Rossi and V. Centorrino and F. Bullo and G. Russo},
   journal={arXiv preprint arXiv:2512.04745},
   year={2025}
