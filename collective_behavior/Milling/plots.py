@@ -81,7 +81,6 @@ def plot_weights_simplex(weights_history, agent_indices, dt=0.05, save_path="wei
 
         tax.ticks(axis='lbr', multiple=0.2, offset=0.035, linewidth=1, fontsize=FS, tick_formats="%.1f")
         tax.clear_matplotlib_ticks()
-        tax._redraw_labels()
 
     '''# --- Single shared colorbar (to the right, not overlapping) ---
     cbar_ax = fig.add_axes([0.80, 0.25, 0.02, 0.5])  # [left, bottom, width, height]
@@ -290,8 +289,6 @@ def plot_simplex_subplot(ax, weights_history, agent_index, cmap, norm, show_labe
         tax.right_axis_label("alignment", fontsize=9, offset=0.38)
         tax.bottom_axis_label("    cohesion", fontsize=9, offset=0.65)
         tax.ticks(axis='lbr', multiple=0.5, offset=0.065, fontsize=8, linewidth=0.5, tick_formats="%.1f")
-
-    tax._redraw_labels()
 
 
 for idx in range(num_boids):
