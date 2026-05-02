@@ -39,7 +39,7 @@ It:
 Outputs:
 
 - `weights_simplex.pdf`  
-  Ternary plot of weight evolution for  one representative agent
+  Ternary plot of weight evolution for one representative agent
   
   <a href="https://github.com/user-attachments/files/26174671/weights_simplex.pdf">
   <img src="https://github.com/user-attachments/assets/ec726983-c82d-45cf-b664-334e77c99c5c" width="400">
@@ -53,10 +53,10 @@ Outputs:
   </a>
 
 - `polarization.pdf`  
-  Polarization as a function of time
-
-  <a href="https://github.com/user-attachments/files/26174689/polarization.pdf">
-  <img src="https://github.com/user-attachments/assets/7ed286bd-2995-47e4-ab32-ad7262b5dda1" width="600">
+  Polarization metric as a function of time
+  
+  <a href="https://github.com/user-attachments/files/27308789/polarization.pdf">
+  <img src="https://github.com/user-attachments/assets/f20a553d-cfbc-40f9-94dc-f4fba9673964" width="600">
   </a>
 
 - `trajectories_video.mp4`  
