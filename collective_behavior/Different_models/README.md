@@ -86,14 +86,8 @@ Outputs:
 
 The uninformed-agent models implemented in this folder are based on:
 
-- I. D. Couzin, J. Krause, R. James, G. D. Ruxton, and N. R. Franks,  
-  “Collective Memory and Spatial Sorting in Animal Groups,”  
-  *Journal of Theoretical Biology* **218**, 1–11 (2002).
+- I. D. Couzin, J. Krause, R. James, G. D. Ruxton, and N. R. Franks, “Collective Memory and Spatial Sorting in Animal Groups, *Journal of Theoretical Biology* **218**, 1–11 (2002).
 
-- F. Cucker and S. Smale,  
-  “Emergent behavior in flocks,”  
-  *IEEE Transactions on Automatic Control* **52**, 852–862 (2007).
+- F. Cucker and S. Smale, “Emergent behavior in flocks,” *IEEE Transactions on Automatic Control* **52**, 852–862 (2007).
 
-- T. Vicsek, A. Czirók, E. Ben-Jacob, I. Cohen, and O. Shochet,  
-  “Novel type of phase transition in a system of self-driven particles,”  
-  *Physical Review Letters* **75**, 1226–1229 (1995).
+- T. Vicsek, A. Czirók, E. Ben-Jacob, I. Cohen, and O. Shochet, “Novel type of phase transition in a system of self-driven particles,” *Physical Review Letters* **75**, 1226–1229 (1995).
