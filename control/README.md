@@ -185,11 +185,7 @@ Results_LQR-LQR/Figures/
 
 This code builds on the `Safe-Control-Gym` framework:
 
-Z. Yuan, A. W. Hall, S. Zhou, L. Brunke, M. Greeff, J. Panerati, and A. P. Schoellig,
-
-*Safe-Control-Gym: A Unified Benchmark Suite for Safe Learning-Based Control and Reinforcement Learning in Robotics.*
-
-IEEE Robotics and Automation Letters, 2022.
+Z. Yuan, A. W. Hall, S. Zhou, L. Brunke, M. Greeff, J. Panerati, and A. P. Schoellig, "Safe-Control-Gym: A Unified Benchmark Suite for Safe Learning-Based Control and Reinforcement Learning in Robotics", *IEEE Robotics and Automation Letters*, (2022).
 
 Official repository:
 [Safe-Control-Gym](https://github.com/utiasDSL/safe-control-gym)
