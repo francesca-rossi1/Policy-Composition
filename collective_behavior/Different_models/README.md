@@ -46,7 +46,7 @@ Outputs:
   Time series of the milling metric
 
 - `distance_history.npy`  
-  Distance of the flock center from the goal over time
+  Distance of the flock from the goal over time
 
 - `boids_trajectories.pkl`  
   Position trajectories of all agents
