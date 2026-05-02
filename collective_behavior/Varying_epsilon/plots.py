@@ -32,7 +32,7 @@ for eps_val in eps_values:
 
 
 # === Plotting functions ===
-def plot_metrics_for_multiple_eps(results_dict, dt, filename="metrics_multi_eps.pdf"):
+def plot_metrics_for_multiple_eps(results_dict, dt, filename="metrics_multi_eps.png"):
     metrics_names = [f"$p$", f"$d$"]
     colors = ['tab:orange', 'tab:green', 'tab:purple']
     t = np.arange(results_dict[eps_values[0]][0].shape[1]) * dt
@@ -41,7 +41,7 @@ def plot_metrics_for_multiple_eps(results_dict, dt, filename="metrics_multi_eps.
     for i, metric in enumerate(metrics_names):
         ax = axs[i]
         for j, eps_val in enumerate(eps_values):
-            data = results_dict[eps_val][i]  # polarization=0, milling=1, distance=2
+            data = results_dict[eps_val][i]
             mean = np.mean(data, axis=0)
             std = np.std(data, axis=0)
             ax.plot(t, mean, label=f"$\\varepsilon$={eps_val}", color=colors[j], linewidth=1.8)
@@ -51,9 +51,9 @@ def plot_metrics_for_multiple_eps(results_dict, dt, filename="metrics_multi_eps.
         ax.set_ylabel(metric)
         ax.set_xlim(0, t[-1])
         ax.tick_params(axis='both')
-        '''# Add legend to first subplot
+        # Add legend to first subplot
         if i == 0:
-            ax.legend(fontsize=14)'''
+            ax.legend(fontsize=FS-4)
 
     axs[0].set_ylim(0, 1)
     axs[-1].set_xlabel(f"Time [s]")
@@ -63,7 +63,7 @@ def plot_metrics_for_multiple_eps(results_dict, dt, filename="metrics_multi_eps.
     plt.show()
 
 
-def plot_weights_multiple_eps(weights_list, epsilons, dt, selected_boids=[0, 39], filename="weights_multiple_eps.pdf"):
+def plot_weights_multiple_eps(weights_list, epsilons, dt, selected_boids=[0, 39], filename="weights_multiple_eps.png"):
     N_eps = len(weights_list)
     N_primitives = weights_list[0].shape[-1]
     t = np.arange(weights_list[0].shape[1]) * dt
@@ -90,20 +90,19 @@ def plot_weights_multiple_eps(weights_list, epsilons, dt, selected_boids=[0, 39]
             if col == 0:
                 ax.set_ylabel(labels[row])
                 '''if row == 0:
-                    ax.legend(fontsize=13)'''
+                    ax.legend(fontsize=FS-4)'''
             if row == N_primitives - 1:
                 ax.set_xlabel("Time [s]")
-            '''if row == 0:
-                ax.set_title(f"$\\varepsilon = {eps}$", fontsize=16)'''
+            if row == 0:
+                ax.set_title(f"$\\varepsilon = {eps}$", fontsize=FS)
             ax.set_xlim(0, t[-1])
             ax.set_ylim(0, 1)
             ax.tick_params(axis='both')
             ax.spines['top'].set_visible(False)
             ax.spines['right'].set_visible(False)
 
-    #handles, labels = ax.get_legend_handles_labels()
-    #fig.legend(handles, labels, loc='lower center', fontsize=12, ncol=len(selected_boids), frameon=False)
-    #plt.tight_layout(rect=[0, 0.05, 1, 1])
+    '''handles, labels = ax.get_legend_handles_labels()
+    fig.legend(handles, labels, loc='lower center', fontsize=FS-2, ncol=len(selected_boids), frameon=False)'''
     plt.tight_layout()
     plt.savefig(filename, dpi=300)
     plt.show()
