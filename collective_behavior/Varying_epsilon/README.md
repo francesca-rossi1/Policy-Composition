@@ -60,8 +60,8 @@ Outputs:
   Time evolution of the policy weights (separation, alignment, cohesion)
   for representative agents:
 
-  * one informed agent
-  * one uninformed agent
+  * one informed agent (red)
+  * one uninformed agent (blue)
     across different $\varepsilon$, with mean ± standard deviation
 
   <img width="800" alt="weights_multiple_eps" src="https://github.com/user-attachments/assets/9239270a-7b52-4dd0-9449-0fa64d280ea7" />
