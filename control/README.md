@@ -18,7 +18,7 @@ We study two controller-composition settings:
   - **Stabilizing LQR primitive**: regulates the quadrotor around its current position using an LQR controller configured for stabilization.
   - **Tracking LQR primitive**: attempts to follow the reference trajectory using an LQR controller configured for trajectory tracking.
 
-In both cases, the experiment evaluates:
+In both cases, the simulations evaluate:
 - our policy composition method,
 - the two individual primitives,
 - and a baseline controller (PID for PD-PD, LQR for LQR-LQR).
