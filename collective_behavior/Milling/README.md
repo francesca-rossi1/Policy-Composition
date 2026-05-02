@@ -47,9 +47,7 @@ Outputs:
 - `weights_simplex.pdf`  
   Ternary plot of weight evolution for one representative agent
 
-  <a href="https://github.com/user-attachments/files/26175355/weights_simplex.pdf">
-  <img src="https://github.com/user-attachments/assets/8151fc1a-3944-4cef-a7cb-42b11c7422d1" width="400">
-  </a>
+  <img width="400" alt="weights_simplex" src="https://github.com/user-attachments/assets/97ab7501-4972-4236-b9ad-f7c060559468">
 
 - `trajectories.pdf`  
   Plot of the trajectories of all agents
@@ -60,18 +58,14 @@ Outputs:
 
 - `milling.pdf`  
   Milling metric as a function of time
-
-  <a href="https://github.com/user-attachments/files/26175386/milling.pdf">
-  <img src="https://github.com/user-attachments/assets/8d9e1c13-07bb-41d6-95ab-9ca3b622ffa7" width="600">
-  </a>
+  
+  <img width="600" alt="milling" src="https://github.com/user-attachments/assets/5c1e9ed1-6ebc-4b86-9938-9e77c2effc8f">
 
 - `min_distance.pdf`  
   Minimum inter-agent distance over time
-
-  <a href="https://github.com/user-attachments/files/26175407/min_distance.pdf">
-  <img src="https://github.com/user-attachments/assets/d94eb86a-59bb-495e-9f72-e1f83407f147" width="600">
-  </a>
-
+  
+  <img width="600" alt="min_distance" src="https://github.com/user-attachments/assets/d4e06747-162f-48d3-becb-4aa512f7ba8e">
+  
 - `trajectories_video.mp4`  
   Animation of the flock evolution
   
@@ -81,9 +75,7 @@ Outputs:
 
 - `all_boids_weights_simplex.pdf`  
   Grid of ternary plots for all agents
-
-  <a href="https://github.com/user-attachments/files/26175462/all_boids_weights_simplex.pdf">
-  <img src="https://github.com/user-attachments/assets/29942555-4e2d-4a8f-bcb1-3086081d24fe" width="600">
-  </a>
+  
+  <img width="600" alt="all_boids_weights_simplex" src="https://github.com/user-attachments/assets/691a99cf-8742-45cb-a22b-ae0da604b28f" />
 
 ---
