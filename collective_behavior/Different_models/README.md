@@ -6,9 +6,9 @@ This folder contains the code for the experiments with informed agents implement
 
 The folder includes three simulation scenarios:
 
-- `Couzin followers/` – Uninformed agents follow the Couzin model [Couzin et al., 2002]
-- `Cucker-Smale followers/` – Uninformed agents follow the Cucker-Smale model [Cucker and Smale, 2007]
-- `Vicsek followers/` – Uninformed agents follow the Vicsek model [Vicsek et al., 1995]
+- `Couzin followers/` – Uninformed agents follow the Couzin model [1]
+- `Cucker-Smale followers/` – Uninformed agents follow the Cucker-Smale model [2]
+- `Vicsek followers/` – Uninformed agents follow the Vicsek model [3]
 
 In all cases, the informed agents use the policy composition dynamics and are driven toward a fixed goal destination.
 
@@ -86,8 +86,8 @@ Outputs:
 
 The uninformed-agent models implemented in this folder are based on:
 
-- I. D. Couzin, J. Krause, R. James, G. D. Ruxton, and N. R. Franks, “Collective Memory and Spatial Sorting in Animal Groups, *Journal of Theoretical Biology* **218**, 1–11 (2002).
+[1] I. D. Couzin, J. Krause, R. James, G. D. Ruxton, and N. R. Franks, “Collective Memory and Spatial Sorting in Animal Groups, *Journal of Theoretical Biology* **218**, 1–11 (2002).
 
-- F. Cucker and S. Smale, “Emergent behavior in flocks,” *IEEE Transactions on Automatic Control* **52**, 852–862 (2007).
+[2] F. Cucker and S. Smale, “Emergent behavior in flocks,” *IEEE Transactions on Automatic Control* **52**, 852–862 (2007).
 
-- T. Vicsek, A. Czirók, E. Ben-Jacob, I. Cohen, and O. Shochet, “Novel type of phase transition in a system of self-driven particles,” *Physical Review Letters* **75**, 1226–1229 (1995).
+[3] T. Vicsek, A. Czirók, E. Ben-Jacob, I. Cohen, and O. Shochet, “Novel type of phase transition in a system of self-driven particles,” *Physical Review Letters* **75**, 1226–1229 (1995).
