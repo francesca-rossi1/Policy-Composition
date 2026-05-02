@@ -57,7 +57,7 @@ Outputs:
   - Polarization over time
   - Distance of the flock to the goal over time
  
-  <img width="2700" height="3000" alt="polarization_distance" src="https://github.com/user-attachments/assets/bdefb83e-55cb-4135-9297-2694e72f4fcd" />
+  <img width="600" alt="polarization_distance" src="https://github.com/user-attachments/assets/bdefb83e-55cb-4135-9297-2694e72f4fcd" />
     
 - `trajectories_video.mp4`  
   Animation of the flock evolution
