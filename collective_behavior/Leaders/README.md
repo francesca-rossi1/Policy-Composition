@@ -46,7 +46,7 @@ Outputs:
   </a>
 
 - `trajectories.pdf`  
-  Plot of agent trajectories and goal
+  Plot of the trajectories of all boids
 
   <a href="https://github.com/user-attachments/files/26175680/trajectories.pdf">
   <img src="https://github.com/user-attachments/assets/83c14731-524b-44af-8457-19855d74980d" width="600">
@@ -55,11 +55,9 @@ Outputs:
 - `polarization_distance.pdf`  
   Combined plot showing:
   - Polarization over time
-  - Distance of the flock centroid to the goal over time
-
-  <a href="https://github.com/user-attachments/files/26175696/polarization_distance.pdf">
-  <img src="https://github.com/user-attachments/assets/162e843e-2743-41a3-99e5-4e7452bceb65" width="600">
-  </a>
+  - Distance of the flock to the goal over time
+ 
+  <img width="2700" height="3000" alt="polarization_distance" src="https://github.com/user-attachments/assets/bdefb83e-55cb-4135-9297-2694e72f4fcd" />
     
 - `trajectories_video.mp4`  
   Animation of the flock evolution
@@ -71,8 +69,7 @@ Outputs:
 - `all_boids_weights_simplex.pdf`  
   Grid of ternary plots showing weight evolution for all agents
 
-  <a href="https://github.com/user-attachments/files/26175712/all_boids_weights_simplex.pdf">
-  <img src="https://github.com/user-attachments/assets/b3922a47-e12b-4576-a48f-29d6bb9b97b8" width="600">
-  </a>
+  <img width="600" alt="all_boids_weights_simplex" src="https://github.com/user-attachments/assets/fcc22e78-7054-4d5b-8cba-a7256c5820b5" />
+
 
 ---
