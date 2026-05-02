@@ -69,7 +69,6 @@ Outputs:
 - `all_boids_weights_simplex.pdf`  
   Grid of ternary plots for all agents
 
-  <a href="https://github.com/user-attachments/files/26174698/all_boids_weights_simplex.pdf">
-  <img src="https://github.com/user-attachments/assets/00ef73a1-dad1-4629-8554-5f5b36014785" width="600">
-  </a>
+  <img width="600" alt="all_boids_weights_simplex" src="https://github.com/user-attachments/assets/7ad50612-7370-43fb-b855-e596f987e7b4" />
+
 ---
