@@ -7,9 +7,10 @@ from matplotlib.collections import LineCollection
 from matplotlib.animation import FFMpegWriter
 from tqdm import tqdm
 from matplotlib import gridspec
+import matplotlib.ticker as ticker
 
 
-FS = 20
+FS = 18
 plt.rcParams.update({
     "font.family": "serif",
     "font.size": FS,
@@ -80,6 +81,16 @@ def plot_weights_simplex(weights_history, agent_indices, dt=0.05, save_path="wei
 
         tax.ticks(axis='lbr', multiple=0.2, offset=0.035, linewidth=1, fontsize=FS, tick_formats="%.1f")
         tax.clear_matplotlib_ticks()
+        tax._redraw_labels()
+
+    '''# --- Single shared colorbar (to the right, not overlapping) ---
+    cbar_ax = fig.add_axes([0.80, 0.25, 0.02, 0.5])  # [left, bottom, width, height]
+    cbar = fig.colorbar(sm, cax=cbar_ax, orientation='vertical')
+
+    tick_locs = np.linspace(0, len(points) - 1, 2)
+    cbar.set_ticks(tick_locs)
+    cbar.set_ticklabels([f"{i * dt:.0f}" for i in tick_locs], fontsize=FS)
+    cbar.set_label("$t$ [s]", fontsize=FS)'''
 
     plt.savefig(save_path, dpi=300, bbox_inches='tight')
     print(f"Figure saved as {save_path}")
@@ -128,11 +139,15 @@ plt.savefig("trajectories.pdf", dpi=300, bbox_inches='tight')
 # Milling plot
 # Time array
 time = np.arange(len(milling_history[:max_steps])) * dt
-fig, ax = plt.subplots(figsize=(8, 6))
+fig, ax = plt.subplots(figsize=(9, 5))
 ax.plot(time, milling_history[:max_steps], linewidth=2)
-ax.set_ylabel(f"$m(t)$", fontsize=FS+4)
-ax.set_xlabel(f"$t$ [s]", fontsize=FS+4)
+ax.set_ylabel(f"$m$", fontsize=FS+4)
+ax.set_xlabel(f"Time [s]", fontsize=FS+4)
 ax.set_ylim(0, 1.05)
+# set tick positions every 0.2
+ax.set_yticks(np.arange(0, 1.01, 0.2))
+# format tick labels to 1 decimal place
+ax.yaxis.set_major_formatter(ticker.FormatStrFormatter('%.1f'))
 ax.set_xlim(0, time[-1])
 ax.tick_params(axis='both', labelsize=FS+4)
 ax.spines['top'].set_visible(False)
@@ -146,8 +161,8 @@ plt.show()
 # Minimum distance plot
 fig, ax = plt.subplots(figsize=(8, 6))
 ax.plot(time, min_dist[:max_steps], linewidth=2)
-ax.set_ylabel("$d_{\\min}(t)$", fontsize=FS+4)
-ax.set_xlabel(f"$t$ [s]", fontsize=FS+4)
+ax.set_ylabel("$d_{\\min}$", fontsize=FS+4)
+ax.set_xlabel(f"Time [s]", fontsize=FS+4)
 ax.set_xlim(0, time[-1])
 ax.tick_params(axis='both', labelsize=FS+4)
 ax.spines['top'].set_visible(False)
@@ -159,7 +174,7 @@ plt.show()
 
 # -------------------------------
 # Video parameters
-fps = int(2 / dt)   # double speed
+fps = int(2 / dt)   # same speed as before
 max_traj_length = 40
 
 # Load trajectories
@@ -185,7 +200,7 @@ for _ in range(num_boids):
     trajectory_collections.append(line)
 
 # Boid scatter
-colors = ["blue"] * num_boids
+colors = ["blue"] * num_boids  # adjust if needed
 scat = ax.scatter(
     [all_trajectories[i][0][0] for i in range(num_boids)],
     [all_trajectories[i][0][1] for i in range(num_boids)],
@@ -196,7 +211,7 @@ scat = ax.scatter(
 
 # Writer
 writer = FFMpegWriter(fps=fps, bitrate=1800)
-video_name = "trajectories_video.mp4"
+video_name = "trajectories_video.mov"
 
 print("\nSaving trajectory video...")
 
@@ -230,6 +245,7 @@ print(f"Video saved as '{video_name}'")
 
 # -------------------------------
 # ALL-BOIDS SIMPLEX GRID PLOT
+
 num_boids = len(weights_history[0])
 cols = 5
 rows = int(np.ceil(num_boids / cols))
@@ -270,9 +286,9 @@ def plot_simplex_subplot(ax, weights_history, agent_index, cmap, norm, show_labe
     )
 
     if show_labels:
-        tax.left_axis_label("$w^1$ (separation)", fontsize=9, offset=0.38)
-        tax.right_axis_label("$w^2$ (alignment)", fontsize=9, offset=0.38)
-        tax.bottom_axis_label("$w^3$ (cohesion)", fontsize=9, offset=0.65)
+        tax.left_axis_label("separation", fontsize=9, offset=0.38)
+        tax.right_axis_label("alignment", fontsize=9, offset=0.38)
+        tax.bottom_axis_label("    cohesion", fontsize=9, offset=0.65)
         tax.ticks(axis='lbr', multiple=0.5, offset=0.065, fontsize=8, linewidth=0.5, tick_formats="%.1f")
 
     tax._redraw_labels()
