@@ -70,9 +70,9 @@ Outputs:
 
 - `flock_metrics_over_time.pdf`  
   Time evolution of:
-  - polarization \(p\)
-  - milling \(m\)
-  - distance to goal \(d\)
+  - polarization \($p$\)
+  - milling \($m$\)
+  - distance to goal \($d$\)
 
 - `trajectories_video.mp4`  
   Animation of the flock evolution. Informed agents are shown in red, uninformed agents are shown in blue.
