@@ -10,7 +10,7 @@ The folder includes three simulation scenarios:
 - `Cucker-Smale followers/` – Uninformed agents follow the Cucker-Smale model [2]
 - `Vicsek followers/` – Uninformed agents follow the Vicsek model [3]
 
-In all cases, the informed agents use the policy composition dynamics and are driven toward a fixed goal destination.
+In all cases, the informed agents use the policy composition model.
 
 ---
 
