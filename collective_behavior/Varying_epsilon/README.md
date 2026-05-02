@@ -53,7 +53,7 @@ Outputs:
   * Distance to goal (d)
     shown for different $\varepsilon$, with mean ± standard deviation across simulations
 
-  <img width="600" alt="metrics_multi_eps" src="https://github.com/user-attachments/assets/624eca24-ca07-411f-8b2f-b3b9f369b9fa" />
+ 
 
 
 * `weights_multiple_eps.pdf`
