@@ -47,6 +47,7 @@ It:
 Outputs:
 
 * `metrics_multi_eps.pdf`
+  
   Time evolution of:
 
   * Polarization (p)
@@ -57,7 +58,8 @@ Outputs:
 
 
 * `weights_multiple_eps.pdf`
-  Time evolution of the policy weights (separation, alignment, cohesion)
+  
+  Time evolution of the primivites' weights (separation, alignment, cohesion)
   for representative agents:
 
   * one informed agent (red)
