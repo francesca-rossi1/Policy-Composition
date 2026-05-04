@@ -52,6 +52,7 @@ Outputs:
 
   * Polarization (p)
   * Distance to goal (d)
+    
     shown for different $\varepsilon$, with mean ± standard deviation across simulations
 
  <img width="600" alt="metrics_multi_eps" src="https://github.com/user-attachments/assets/e7606e5e-2571-464b-86dd-caff39951560" />
@@ -64,6 +65,7 @@ Outputs:
 
   * one informed agent (red)
   * one uninformed agent (blue)
+    
     across different $\varepsilon$, with mean ± standard deviation
 
   <img width="800" alt="weights_multiple_eps" src="https://github.com/user-attachments/assets/4f8ee7c7-8c80-41b4-960a-7e56c3d3366c" />
