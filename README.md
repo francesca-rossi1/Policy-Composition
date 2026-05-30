@@ -1,4 +1,4 @@
-# Neural Policy Composition from Free Energy Minimization
+# Policy Composition
 
 ## Overview
 This repository contains code for the paper:
